@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Jquery Gallery</title>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+<script>
+	$(window).load (function() {
+		var theImage = $("ul li img");
+		var theWidth = theImage.width();
+
+		$("ul").wrap("<div id='mother'>");
+		$("#mother").css({
+			width : function(){
+				return theWidth;
+			},
+
+			height : function(){
+				return theImage.height();
+			},
+
+			position : "relative",
+			overflow : "hidden"
+		});
+
+		var totalWidth = theImage.length * theWidth;
+		$('ul').css({
+			width : function(){
+				return totalWidth;
+			}
+		});
+
+		$(theImage).each(function(intIndex){				
+		$(this).nextAll('a')
+			.bind("click", function(){
+				if($(this).is(".next"))	{
+					$(this).parent('li').parent('ul').animate({
+						"margin-left": (-(intIndex + 1) * theWidth)				
+							}, 1000)	
+					} else if($(this).is(".previous")){
+					$(this).parent('li').parent('ul').animate({
+						"margin-left": (-(intIndex - 1) * theWidth)				
+					}, 1000)	
+					} else if($(this).is(".startover")){
+					$(this).parent('li').parent('ul').animate({
+						"margin-left": (0)				
+					}, 1000)
+			}
+			});//close .bind()									 
+		});//close .each()
+
+
+	})
+</script>
+<style>
+<style>
+*{padding:0; margin:0;}
+ul {}
+ul li {float:left; list-style:none; position:relative; }
+ul li a.next {position:absolute; left:100px;}
+ul li a.previous{position:absolute; left:0px;}
+ul li a.startover{position:absolute; left:200px;}
+</style>
+
+</style>
+
+</head>
+
+<body>
+
+	<ul>
+		<li><img src="images/image1.jpg" /><a class="next" href="#">next</a></li>
+		<li><img src="images/image2.jpg" /><a class="next" href="#">next</a><a class="previous" href="#">prev</a></li>
+		<li><img src="images/image3.jpg" /><a class="next" href="#">next</a><a class="previous" href="#">prev</a></li>
+		<li><img src="images/image4.jpg" /><a class="next" href="#">next</a><a class="previous" href="#">prev</a></li>
+		<li><img src="images/image6.jpg" /><a class="previous" href="#">prev</a><a class="startover" href="#">startover</a></li>
+	</ul>
+
+</body>
+
+</html>
